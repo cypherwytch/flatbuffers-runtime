@@ -1,0 +1,1 @@
+Removes all files unnecessary for the runtime Nim flatbuffers library.
