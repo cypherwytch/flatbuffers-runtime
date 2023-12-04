@@ -1,5 +1,5 @@
 import
-   src/[
+   flatbuffers/[
       builder,
       struct,
       table
