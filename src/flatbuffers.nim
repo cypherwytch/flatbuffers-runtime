@@ -1,7 +1,8 @@
 import
     flatbuffers/[
         builder,
+        offset,
         struct,
         table
     ]
-export flatbuffers.builder, flatbuffers.table, flatbuffers.struct
+export flatbuffers.offset, flatbuffers.builder, flatbuffers.table, flatbuffers.struct

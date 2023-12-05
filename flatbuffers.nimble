@@ -1,4 +1,4 @@
-version     = "2.0.8"
+version     = "2.0.9"
 author      = "flatbuffers"
 description = "Flatbuffers"
 license     = "Apache 2.0"

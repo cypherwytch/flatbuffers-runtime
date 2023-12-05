@@ -1,4 +1,5 @@
 import table
+import offset
 
 
 type FlatObj* {.inheritable.} = object
@@ -19,6 +20,9 @@ func GetRootAs*(result: var FlatObj; buf: seq[byte]; offset: uoffset) =
         vtable = Vtable(Bytes: buf[offset..^1], Pos: offset)
         n = Get[uoffset](vtable, offset)
     result.Init(buf, n+offset)
+
+template GetRootAs*(result: var FlatObj; buf: seq[byte]; offset: int) =
+    GetRootAs(result, buf, uoffset(offset))
 
 func GetRootAs*(result: var FlatObj; buf: string; offset: uoffset) =
     result.GetRootAs(cast[seq[byte]](buf), offset)
