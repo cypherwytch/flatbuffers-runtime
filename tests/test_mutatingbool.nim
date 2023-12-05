@@ -5,9 +5,10 @@ discard """
 """
 import std/unittest
 import std/options
-import flatbuffers
+import ../src/flatbuffers
 import ./fbs/TestMutatingBool
 import ./fbs/Property
+
 
 suite "TestMutatingBool":
 

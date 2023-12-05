@@ -8,7 +8,7 @@
   Rooting type : MyGame.Example.Monster ()
 ]#
 
-import flatbuffers
+import ../../../src/flatbuffers
 
 type InParentNamespace* = object of FlatObj
 proc InParentNamespaceStart*(builder: var Builder) =

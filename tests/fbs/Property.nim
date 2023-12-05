@@ -7,11 +7,11 @@
   Declared by  : 
 ]#
 
-import flatbuffers
+import ../../src/flatbuffers
 
 type Property* = object of FlatObj
 func property*(self: Property): bool =
-  return Get[bool](self.tab, self.tab.Pos + 0)
+  return Get[bool](self.tab, self.tab.Pos + 0.uoffset)
 func `property=`*(self: var Property, n: bool): bool =
   return self.tab.Mutate(self.tab.Pos + 0, n)
 proc PropertyCreate*(self: var Builder, property: bool): uoffset =

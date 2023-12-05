@@ -5,7 +5,7 @@ discard """
 """
 import std/unittest
 import std/options
-import flatbuffers
+import ../src/flatbuffers
 import ./fbs/optional_scalars/ScalarStuff
 
 
@@ -18,7 +18,7 @@ suite "TestOptionalScalars":
         builder.Finish(root)
 
         var optionals: ScalarStuff
-        optionals.GetRootAs(builder.FinishedBytes(), 0)
+        optionals.GetRootAs(builder.FinishedBytes(), 0.uoffset)
 
         # Creates a flatbuffer with optional values.
         check(optionals.justI8 == 0)

@@ -5,12 +5,13 @@ discard """
 """
 import std/unittest
 import std/options
-import flatbuffers
+import ../src/flatbuffers
 import ./fbs/MyGame/Example/Test
 import ./fbs/MyGame/Example/Monster
 import ./fbs/MyGame/Example/Vec3
 import ./fbs/MyGame/Example/Color as ColorMod
 import ./fbs/MyGame/Example/Any as AnyMod
+
 
 proc verifyMonster(monster: var Monster) =
     check(monster.hp == 80)
@@ -69,7 +70,7 @@ suite "TestMyGame":
                 0, 0, 0, 5, 0, 0, 0, 87, 105, 108, 109, 97, 0, 0, 0, 6, 0, 0, 0, 66, 97,
                 114, 110, 101, 121, 0, 0, 5, 0, 0, 0, 70, 114, 111, 100, 111, 0, 0, 0]
         var monster: Monster
-        GetRootAs(monster, data, 0)
+        GetRootAs(monster, data, 0.uoffset)
         verifyMonster(monster)
 
     test "testCreateString":
@@ -104,7 +105,7 @@ suite "TestMyGame":
 
     test "testCreateTestVector":
         var fbb = newBuilder(0)
-        fbb.MonsterStartTest4Vector(2)
+        fbb.MonsterStartTest4Vector(2.uoffset)
         discard fbb.TestCreate(a = 30, b = 40)
         discard fbb.TestCreate(a = 10, b = 20)
         let test4 = fbb.EndVector()
@@ -156,17 +157,17 @@ suite "TestMyGame":
         fbb.MonsterAddName(fred)
         let mon2 = fbb.MonsterEnd()
 
-        fbb.MonsterStartTest4Vector(2)
+        fbb.MonsterStartTest4Vector(2.uoffset)
         discard fbb.TestCreate(a = 30, b = 40)
         discard fbb.TestCreate(a = 10, b = 20)
         let test4 = fbb.EndVector()
 
-        fbb.MonsterStartTestarrayofstringVector(2)
+        fbb.MonsterStartTestarrayofstringVector(2.uoffset)
         fbb.PrependOffsetRelative(test1)
         fbb.PrependOffsetRelative(test2)
         let stringTestVector = fbb.EndVector()
 
-        fbb.MonsterStartTestarrayoftablesVector(3)
+        fbb.MonsterStartTestarrayoftablesVector(3.uoffset)
         fbb.PrependOffsetRelative(offsets[0])
         fbb.PrependOffsetRelative(offsets[1])
         fbb.PrependOffsetRelative(offsets[2])

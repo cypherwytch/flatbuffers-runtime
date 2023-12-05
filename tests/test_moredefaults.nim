@@ -4,8 +4,9 @@ discard """
     timeout:  60.0
 """
 import std/unittest
-import flatbuffers
+import ../src/flatbuffers
 import ./fbs/MoreDefaults
+
 
 suite "TestMoreDefaults":
 

@@ -9,7 +9,7 @@
 ]#
 
 import ../../TableA as TableA
-import flatbuffers
+import ../../../../src/flatbuffers
 import std/options
 
 type TableB* = object of FlatObj

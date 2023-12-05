@@ -10,7 +10,7 @@
 
 import Color as MyGame_Example_Color
 import Test as MyGame_Example_Test
-import flatbuffers
+import ../../../../src/flatbuffers
 
 type Vec3* = object of FlatObj
 func x*(self: Vec3): float32 =

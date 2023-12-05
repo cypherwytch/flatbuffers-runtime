@@ -8,7 +8,7 @@
   Rooting type : MyGame.Example.Monster ()
 ]#
 
-import flatbuffers
+import ../../../../src/flatbuffers
 import std/options
 
 type TypeAliases* = object of FlatObj
@@ -90,7 +90,7 @@ func v8*(self: TypeAliases, j: int): int8 =
   let o = self.tab.Offset(24)
   if o != 0:
     var x = self.tab.Vector(o)
-    x += j.uoffset * 1.uoffset
+    x += j.uoffset * 1
     return Get[int8](self.tab, x)
 func v8*(self: TypeAliases): seq[int8] = 
   let len = self.v8Length
@@ -104,7 +104,7 @@ func vf64*(self: TypeAliases, j: int): float64 =
   let o = self.tab.Offset(26)
   if o != 0:
     var x = self.tab.Vector(o)
-    x += j.uoffset * 8.uoffset
+    x += j.uoffset * 8
     return Get[float64](self.tab, x)
 func vf64*(self: TypeAliases): seq[float64] = 
   let len = self.vf64Length

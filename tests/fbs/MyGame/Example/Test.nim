@@ -8,7 +8,7 @@
   Rooting type : MyGame.Example.Monster ()
 ]#
 
-import flatbuffers
+import ../../../../src/flatbuffers
 
 type Test* = object of FlatObj
 func a*(self: Test): int16 =

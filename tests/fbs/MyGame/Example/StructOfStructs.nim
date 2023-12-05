@@ -10,7 +10,7 @@
 
 import Ability as MyGame_Example_Ability
 import Test as MyGame_Example_Test
-import flatbuffers
+import ../../../../src/flatbuffers
 
 type StructOfStructs* = object of FlatObj
 func a*(self: StructOfStructs): MyGame_Example_Ability.Ability =

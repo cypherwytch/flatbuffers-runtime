@@ -8,7 +8,7 @@
 ]#
 
 import Property as Property
-import flatbuffers
+import ../../src/flatbuffers
 import std/options
 
 type TestMutatingBool* = object of FlatObj

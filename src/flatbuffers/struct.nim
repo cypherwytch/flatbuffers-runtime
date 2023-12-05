@@ -21,5 +21,8 @@ func GetRootAs*(result: var FlatObj; buf: seq[byte]; offset: uoffset) =
         n = Get[uoffset](vtable, offset)
     result.Init(buf, n+offset)
 
+template GetRootAs*(result: var FlatObj; buf: seq[byte]; offset: int) =
+    GetRootAs(result, buf, uoffset(offset))
+
 func GetRootAs*(result: var FlatObj; buf: string; offset: uoffset) =
     result.GetRootAs(cast[seq[byte]](buf), offset)

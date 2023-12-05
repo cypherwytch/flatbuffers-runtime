@@ -8,7 +8,7 @@
   Rooting type : MyGame.Example.Monster ()
 ]#
 
-import flatbuffers
+import ../../../../src/flatbuffers
 
 type Monster* = object of FlatObj
 proc MonsterStart*(builder: var Builder) =

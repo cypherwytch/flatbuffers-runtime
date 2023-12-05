@@ -8,9 +8,10 @@
   Rooting type : optional_scalars.ScalarStuff ()
 ]#
 
-import OptionalByte as optional_scalars_OptionalByte
-import flatbuffers
+import ./OptionalByte as optional_scalars_OptionalByte
+import ../../../src/flatbuffers
 import std/options
+
 
 type ScalarStuff* = object of FlatObj
 func justI8*(self: ScalarStuff): int8 =

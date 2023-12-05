@@ -8,7 +8,7 @@
 ]#
 
 import Abc as Abc
-import flatbuffers
+import ../../src/flatbuffers
 
 type MoreDefaults* = object of FlatObj
 func intsLength*(self: MoreDefaults): int = 
@@ -19,7 +19,7 @@ func ints*(self: MoreDefaults, j: int): int32 =
   let o = self.tab.Offset(4)
   if o != 0:
     var x = self.tab.Vector(o)
-    x += j.uoffset * 4.uoffset
+    x += j.uoffset * 4
     return Get[int32](self.tab, x)
 func ints*(self: MoreDefaults): seq[int32] = 
   let len = self.intsLength
@@ -33,7 +33,7 @@ func floats*(self: MoreDefaults, j: int): float32 =
   let o = self.tab.Offset(6)
   if o != 0:
     var x = self.tab.Vector(o)
-    x += j.uoffset * 4.uoffset
+    x += j.uoffset * 4
     return Get[float32](self.tab, x)
 func floats*(self: MoreDefaults): seq[float32] = 
   let len = self.floatsLength
@@ -42,12 +42,12 @@ func floats*(self: MoreDefaults): seq[float32] =
 func emptyString*(self: MoreDefaults): string =
   let o = self.tab.Offset(8)
   if o != 0:
-    return self.tab.String(self.tab.Pos + o)
+    return self.tab.String(self.tab.Pos + o.uoffset)
   return ""
 func someString*(self: MoreDefaults): string =
   let o = self.tab.Offset(10)
   if o != 0:
-    return self.tab.String(self.tab.Pos + o)
+    return self.tab.String(self.tab.Pos + o.uoffset)
   return ""
 func abcsLength*(self: MoreDefaults): int = 
   let o = self.tab.Offset(12)
@@ -57,7 +57,7 @@ func abcs*(self: MoreDefaults, j: int): Abc.Abc =
   let o = self.tab.Offset(12)
   if o != 0:
     var x = self.tab.Vector(o)
-    x += j.uoffset * 4.uoffset
+    x += j.uoffset * 4
     return Abc.Abc(Get[int32](self.tab, x))
 func abcs*(self: MoreDefaults): seq[Abc.Abc] = 
   let len = self.abcsLength
@@ -71,7 +71,7 @@ func bools*(self: MoreDefaults, j: int): bool =
   let o = self.tab.Offset(14)
   if o != 0:
     var x = self.tab.Vector(o)
-    x += j.uoffset * 1.uoffset
+    x += j.uoffset * 1
     return Get[bool](self.tab, x)
 func bools*(self: MoreDefaults): seq[bool] = 
   let len = self.boolsLength

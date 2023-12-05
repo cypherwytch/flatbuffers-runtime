@@ -243,7 +243,7 @@ proc Create*[T](this; s: T): uoffset = # Both CreateString and CreateByteVector 
     when T is cstring or T is string:
         let x = s.getBytes()
         let l = x.len.uoffset
-        this.vectorNumElems = l-1
+        this.vectorNumElems = l-1.uoffset
     else:
         let x = s
         let l = x.len.uoffset

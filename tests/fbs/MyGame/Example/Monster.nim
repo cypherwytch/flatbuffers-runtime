@@ -20,7 +20,7 @@ import Referrable as MyGame_Example_Referrable
 import Stat as MyGame_Example_Stat
 import Test as MyGame_Example_Test
 import Vec3 as MyGame_Example_Vec3
-import flatbuffers
+import ../../../../src/flatbuffers
 import std/options
 
 #  an example documentation comment: "monster object"
@@ -56,7 +56,7 @@ func inventory*(self: Monster, j: int): uint8 =
   let o = self.tab.Offset(14)
   if o != 0:
     var x = self.tab.Vector(o)
-    x += j.uoffset * 1.uoffset
+    x += j.uoffset * 1
     return Get[uint8](self.tab, x)
 func inventory*(self: Monster): seq[uint8] = 
   let len = self.inventoryLength
@@ -88,7 +88,7 @@ func test4*(self: Monster, j: int): MyGame_Example_Test.Test =
   let o = self.tab.Offset(22)
   if o != 0:
     var x = self.tab.Vector(o)
-    x += j.uoffset * 4.uoffset
+    x += j.uoffset * 4
     return MyGame_Example_Test.Test(tab: Vtable(Bytes: self.tab.Bytes, Pos: x))
 func test4*(self: Monster): seq[MyGame_Example_Test.Test] = 
   let len = self.test4Length
@@ -102,7 +102,7 @@ func testarrayofstring*(self: Monster, j: int): string =
   let o = self.tab.Offset(24)
   if o != 0:
     var x = self.tab.Vector(o)
-    x += j.uoffset * 4.uoffset
+    x += j.uoffset * 4
     return self.tab.String(x)
 func testarrayofstring*(self: Monster): seq[string] = 
   let len = self.testarrayofstringLength
@@ -116,7 +116,7 @@ func testarrayoftables*(self: Monster, j: int): Monster =
   let o = self.tab.Offset(26)
   if o != 0:
     var x = self.tab.Vector(o)
-    x += j.uoffset * 4.uoffset
+    x += j.uoffset * 4
     return Monster(tab: Vtable(Bytes: self.tab.Bytes, Pos: x))
 func testarrayoftables*(self: Monster): seq[Monster] = 
   let len = self.testarrayoftablesLength
@@ -134,7 +134,7 @@ func testnestedflatbuffer*(self: Monster, j: int): uint8 =
   let o = self.tab.Offset(30)
   if o != 0:
     var x = self.tab.Vector(o)
-    x += j.uoffset * 1.uoffset
+    x += j.uoffset * 1
     return Get[uint8](self.tab, x)
 func testnestedflatbuffer*(self: Monster): seq[uint8] = 
   let len = self.testnestedflatbufferLength
@@ -215,7 +215,7 @@ func testarrayofbools*(self: Monster, j: int): bool =
   let o = self.tab.Offset(52)
   if o != 0:
     var x = self.tab.Vector(o)
-    x += j.uoffset * 1.uoffset
+    x += j.uoffset * 1
     return Get[bool](self.tab, x)
 func testarrayofbools*(self: Monster): seq[bool] = 
   let len = self.testarrayofboolsLength

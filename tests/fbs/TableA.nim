@@ -9,7 +9,7 @@
 ]#
 
 import MyGame/OtherNameSpace/TableB as MyGame_OtherNameSpace_TableB
-import flatbuffers
+import ../../src/flatbuffers
 import std/options
 
 type TableA* = object of FlatObj

@@ -8,7 +8,7 @@
   Rooting type : MyGame.Example.Monster ()
 ]#
 
-import flatbuffers
+import ../../../../src/flatbuffers
 
 type Referrable* = object of FlatObj
 func id*(self: Referrable): uint64 =

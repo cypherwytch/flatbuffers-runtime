@@ -9,7 +9,7 @@
 ]#
 
 import StructOfStructs as MyGame_Example_StructOfStructs
-import flatbuffers
+import ../../../../src/flatbuffers
 
 type StructOfStructsOfStructs* = object of FlatObj
 func a*(self: StructOfStructsOfStructs): MyGame_Example_StructOfStructs.StructOfStructs =

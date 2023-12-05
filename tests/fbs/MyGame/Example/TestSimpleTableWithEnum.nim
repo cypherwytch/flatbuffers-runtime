@@ -9,7 +9,7 @@
 ]#
 
 import Color as MyGame_Example_Color
-import flatbuffers
+import ../../../../src/flatbuffers
 
 type TestSimpleTableWithEnum* = object of FlatObj
 func color*(self: TestSimpleTableWithEnum): MyGame_Example_Color.Color =
