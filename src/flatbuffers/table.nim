@@ -1,12 +1,13 @@
 import endian
+import offset
 
 
-type
-    uoffset* = uint32 ## offset in to the buffer
-    soffset* = int32 ## offset from start of table, to a vtable
-    voffset* = uint16 ## offset from start of table to value
+# type
+#     uoffset* = uint32 ## offset in to the buffer
+#     soffset* = int32 ## offset from start of table, to a vtable
+#     voffset* = uint16 ## offset from start of table to value
 
-type Offsets* = uoffset | soffset | voffset
+# type Offsets* = uoffset | soffset | voffset
 
 type Vtable* = object
     Bytes*: seq[byte]
@@ -59,13 +60,13 @@ func WriteVal*[T: not SomeFloat](b: var openArray[byte]; off: uoffset;
 func WriteVal*[T: not SomeFloat](b: var seq[byte]; off: uoffset;
         n: T) {.inline.} =
     when sizeof(T) == 8:
-        littleEndianX(addr b[off], unsafeAddr n, T.sizeof)
+        littleEndianX(addr b[off.uint32], unsafeAddr n, T.sizeof)
     elif sizeof(T) == 4:
-        littleEndianX(addr b[off], unsafeAddr n, T.sizeof)
+        littleEndianX(addr b[off.uint32], unsafeAddr n, T.sizeof)
     elif sizeof(T) == 2:
-        littleEndianX(addr b[off], unsafeAddr n, T.sizeof)
+        littleEndianX(addr b[off.uint32], unsafeAddr n, T.sizeof)
     elif sizeof(T) == 1:
-        b[off] = n.uint8
+        b[off.uint32] = n.uint8
     else:
         discard
         #littleEndianX(addr b[off], unsafeAddr n, T.sizeof)
@@ -89,7 +90,7 @@ func Offset*(this; off: voffset): voffset =
     let vtableEnd = this.Get[:voffset](vtable)
     if off < vtableEnd:
         return this.Get[:voffset](vtable + off)
-    return 0
+    return 0.voffset
 
 
 func Indirect*(this; off: uoffset): uoffset =

@@ -1,4 +1,5 @@
 import table
+import offset
 
 
 type FlatObj* {.inheritable.} = object

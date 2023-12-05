@@ -1,5 +1,6 @@
 import math
 import table
+import offset
 
 
 const MAX_BUFFER_SIZE* = 2^31
@@ -25,7 +26,7 @@ func newBuilder*(size: int): Builder =
     result.head = size.uoffset
     result.nested = false
     result.finished = false
-    result.vectorNumElems = 0
+    result.vectorNumElems = 0.uoffset
 
 proc FinishedBytes*(this): seq[byte] =
     if not this.finished:
@@ -47,7 +48,7 @@ proc StartObject*(this; numfields: int) =
 
     this.current_vtable.setLen(numfields)
     for i in this.current_vtable.mitems():
-        i = 0
+        i = 0.uoffset
     this.objectEnd = this.Offset()
     this.nested = true
 
@@ -68,7 +69,7 @@ proc GrowByteBuffer*(this) =
         dec(j)
 
 proc Place*[T](this; x: T) =
-    this.head -= uoffset x.sizeof
+    this.head -= uoffset(x.sizeof)
     WriteVal(this.bytes, this.head, x)
 
 func Pad*(this; n: int) =
@@ -90,12 +91,12 @@ proc Prep*(this; size: int; additionalBytes: int) =
 proc PrependOffsetRelative*[T: Offsets](this; off: T) =
     when T is voffset:
         this.Prep(T.sizeof, 0)
-        if not off.uoffset <= this.Offset:
+        if not (off.uoffset <= this.Offset):
             quit("flatbuffers: Offset arithmetic error.")
         this.Place(off)
     else:
         this.Prep(T.sizeof, 0)
-        if not off.uoffset <= this.Offset:
+        if not (off.uoffset <= this.Offset):
             quit("flatbuffers: Offset arithmetic error.")
         let off2: T = this.Offset.T - off + sizeof(T).T
         this.Place(off2)
@@ -138,7 +139,7 @@ proc VtableEqual*(a: seq[uoffset]; objectStart: uoffset; b: seq[byte]): bool =
         var seq = b[i * voffset.sizeof..<(i + 1) * voffset.sizeof]
         let x = GetVal[voffset](addr seq)
 
-        if x == 0 and a[i] == 0:
+        if x == 0.voffset and a[i] == 0.uoffset:
             inc i
             continue
 
@@ -155,7 +156,7 @@ proc WriteVtable*(this): uoffset =
     var existingVtable = uoffset 0
 
     var i = this.current_vtable.len - 1
-    while i >= 0 and this.current_vtable[i] == 0: dec i
+    while i >= 0 and this.current_vtable[i] == 0.uoffset: dec i
 
     this.current_vtable = this.current_vtable[0..i]
     for i in countdown(this.vtables.len - 1, 0):
@@ -174,10 +175,10 @@ proc WriteVtable*(this): uoffset =
             existingVtable = vt2Offset
             break
 
-    if existingVtable == 0:
+    if existingVtable == 0.uoffset:
         for i in countdown(this.current_vtable.len - 1, 0):
             var off: uoffset
-            if this.current_vtable[i] != 0:
+            if this.current_vtable[i] != 0.uoffset:
                 off = objectOffset - this.current_vtable[i]
 
             this.PrependOffsetRelative(off.voffset)
@@ -223,7 +224,7 @@ proc EndVector*(this): uoffset =
         quit("builder is not nested")
     this.nested = false
     this.Place(this.vectorNumElems)
-    this.vectorNumElems = 0
+    this.vectorNumElems = 0.uoffset
     result = this.Offset
 
 proc getChars*(str: seq[byte]): string =
