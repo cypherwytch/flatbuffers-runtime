@@ -6,7 +6,7 @@ discard """
 import std/unittest
 import std/options
 import flatbuffers
-import ../../../optional_scalars/ScalarStuff
+import ./fbs/optional_scalars/ScalarStuff
 
 
 suite "TestOptionalScalars":

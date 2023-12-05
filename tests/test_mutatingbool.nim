@@ -6,8 +6,8 @@ discard """
 import std/unittest
 import std/options
 import flatbuffers
-import ../../../TestMutatingBool
-import ../../../Property
+import ./fbs/TestMutatingBool
+import ./fbs/Property
 
 suite "TestMutatingBool":
 
