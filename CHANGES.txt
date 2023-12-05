@@ -8,3 +8,8 @@ src/flatbuffers/table.nim
 src/flatbuffers/builder.nim
 src/flatbuffers/endian.nim
 src/flatbuffers/struct.nim
+README.md
+tests/test_moredefaults.nim
+tests/test_mutatingbool.nim
+tests/test_mygame.nim
+test_optional_scalars.nim
