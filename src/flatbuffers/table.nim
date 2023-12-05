@@ -2,13 +2,6 @@ import endian
 import offset
 
 
-# type
-#     uoffset* = uint32 ## offset in to the buffer
-#     soffset* = int32 ## offset from start of table, to a vtable
-#     voffset* = uint16 ## offset from start of table to value
-
-# type Offsets* = uoffset | soffset | voffset
-
 type Vtable* = object
     Bytes*: seq[byte]
     Pos*: uoffset
@@ -92,14 +85,25 @@ func Offset*(this; off: voffset): voffset =
         return this.Get[:voffset](vtable + off)
     return 0.voffset
 
+template Offset*(this; off: int): voffset =
+    this.Offset(off.voffset)
 
 func Indirect*(this; off: uoffset): uoffset =
     result = off + this.Get[:uoffset](off)
+
+template Indirect*(this; off: int): uoffset =
+    this.Indirect(off.uoffset)
 
 func VectorLen*(this; off: uoffset): int =
     var newoff: uoffset = off + this.Pos
     newoff += this.Get[:uoffset](newoff)
     return this.Get[:uoffset](newoff).int
+
+template VectorLen*(this; off: int): int =
+    this.VectorLen(off.uoffset)
+
+template VectorLen*(this; off: voffset): int =
+    this.VectorLen(off.uoffset)
 
 func Vector*(this; off: uoffset): uoffset =
     let newoff: uoffset = off + this.Pos
@@ -107,10 +111,22 @@ func Vector*(this; off: uoffset): uoffset =
     x += (uoffset.sizeof).uoffset
     result = x
 
+template Vector*(this; off: int): uoffset =
+    this.Vector(off.uoffset)
+
+template Vector*(this; off: voffset): uoffset =
+    this.Vector(off.uoffset)
+
 func Union*(this; off: uoffset): Vtable =
     let newoff: uoffset = off + this.Pos
     result.Pos = newoff + this.Get[:uoffset](newoff)
     result.Bytes = this.Bytes
+
+template Union*(this; off: int): Vtable =
+    this.Union(off.uoffset)
+
+template Union*(this; off: voffset): Vtable =
+    this.Union(off.uoffset)
 
 func GetSlot*[T](this; slot: voffset; d: T): T =
     let off = this.Offset(slot)
@@ -118,11 +134,17 @@ func GetSlot*[T](this; slot: voffset; d: T): T =
         return d
     return this.Get[T](this.Pos + off)
 
+template GetSlot*[T](this; slot: int; d: T): T =
+    this.GetSlot(slot.voffset, d)
+
 func GetOffsetSlot*[T: Offsets](this; slot: voffset; d: T): T =
     let off = this.Offset(slot)
     if off == 0:
         return d
     return off
+
+template GetOffsetSlot*[T: Offsets](this; slot: int; d: T): T =
+    this.GetOffsetSlot(slot.voffset, d)
 
 func ByteVector*(this; off: uoffset): seq[byte] =
     let
@@ -148,3 +170,6 @@ func MutateSlot*[T](this; slot: voffset; n: T): bool =
     if off != 0:
         return this.Mutate(this.Pos + off.uoffset, n)
     return false
+
+template MutateSlot*[T](this; slot: int; n: T): bool =
+    this.MutateSlot(slot.voffset, n)
