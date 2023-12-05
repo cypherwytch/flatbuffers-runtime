@@ -1,1 +1,10 @@
 Removes all files unnecessary for the runtime Nim flatbuffers library.
+
+Changed files:
+
+flatbuffers.nimble
+src/flatbuffers.nim
+src/flatbuffers/table.nim
+src/flatbuffers/builder.nim
+src/flatbuffers/endian.nim
+src/flatbuffers/struct.nim
